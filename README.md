@@ -45,5 +45,8 @@ Three features occur to me.
 2. A method for implementing multiple sliders.
 3. Micro-thumbnails of the Slider Images posted in the Admin Slider Image list.
 
+## Version 0.3
+A new slider size, for ultra-thin banners, has been produced. This is especially useful with the Gold Bowl theme.
+
 ## Version 0.2
 This is the current stable version. It is updateable, using the Github Updater plugin.

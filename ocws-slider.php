@@ -3,7 +3,7 @@
     Plugin Name: OCWS Slider Plugin
     Description: This is a full featured slider plugin. It is actually a simple implementation of a nivo slideshow into WordPress. It utilizes the nivo slider jQuery code, following a tutorial by Ciprian Turcu. A couple of OCWS custom features have been added. Make sure you include the shortcode [ocwssl-shortcode] in any page where you wish the slider to appear.
     Author: Paul Taylor
-    Version: 0.2
+    Version: 0.3
     Plugin URI: http://oldcastleweb.com/pws/plugins
     Author URI: http://oldcastleweb.com/pws/about
     License: GPL2
@@ -44,14 +44,15 @@ function ocwssl_init() {
         'supports' => array(
             'title',
             'thumbnail',
-            
+
         )
     );
     register_post_type('ocwssl_images', $args);
     add_action('add_meta_boxes','ocwssl_mbe_create');
-        	
+
     add_image_size('ocwssl_widget', 150, 83, true);
     add_image_size('ocwssl_function', 600, 280, true);
+    add_image_size('ocwssl_thin',600, 40, true);
 }
 add_theme_support( 'post-thumbnails' );
 add_action('init', 'ocwssl_init');
@@ -78,18 +79,18 @@ function ocwssl_register_scripts() {
         // register
         wp_register_script('ocwssl_nivo-script', plugins_url('nivo-slider/jquery.nivo.slider.js', __FILE__), array( 'jquery' ));
         wp_register_script('ocwssl_script', plugins_url('script.js', __FILE__));
- 
+
         // enqueue
         wp_enqueue_script('ocwssl_nivo-script');
         wp_enqueue_script('ocwssl_script');
     }
 }
- 
+
 function ocwssl_register_styles() {
     // register
     wp_register_style('ocwssl_styles', plugins_url('nivo-slider/nivo-slider.css', __FILE__));
     wp_register_style('ocwssl_styles_theme', plugins_url('nivo-slider/themes/default/default.css', __FILE__));
- 
+
     // enqueue
     wp_enqueue_style('ocwssl_styles');
     wp_enqueue_style('ocwssl_styles_theme');
@@ -103,12 +104,12 @@ function ocwssl_function($type='ocwssl_function') {
     );
     $result = '<div class="slider-wrapper theme-default">';
     $result .= '<div id="slider" class="nivoSlider">';
- 
+
     //the loop
     $loop = new WP_Query($args);
     while ($loop->have_posts()) {
         $loop->the_post();
- 
+
         $the_url = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), $type);
         $result .='<img title="'.get_the_title().'" src="' . $the_url[0] . '" data-thumb="' . $the_url[0] . '" alt=""/>';
     }
@@ -124,15 +125,15 @@ function ocwssl_function($type='ocwssl_function') {
 function ocwssl_widgets_init() {
     register_widget('ocwssl_Widget');
 }
- 
+
 add_action('widgets_init', 'ocwssl_widgets_init');
 
 class ocwssl_Widget extends WP_Widget {
- 
+
     public function __construct() {
         parent::__construct('ocwssl_Widget', 'OCWS Slideshow', array('description' => __('A Nivo Slideshow Widget, from OCWS', 'text_domain')));
     } // end public function __construct
-    
+
     public function form($instance) {
     if (isset($instance['title'])) {
         $title = $instance['title'];
@@ -147,14 +148,14 @@ class ocwssl_Widget extends WP_Widget {
         </p>
     <?php
     } // end public function form
-    
+
     public function update($new_instance, $old_instance) {
     $instance = array();
     $instance['title'] = strip_tags($new_instance['title']);
- 
+
     return $instance;
     } // end public function update
-    
+
     public function widget($args, $instance) {
     extract($args);
     // the title
@@ -165,7 +166,7 @@ class ocwssl_Widget extends WP_Widget {
     echo ocwssl_function('ocwssl_widget');
     echo $after_widget;
     } // end public function widget
-    
+
 } // end class ocwssl_Widget
 
 
