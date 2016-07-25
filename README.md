@@ -54,6 +54,9 @@ Three features occur to me.
 2. A method for implementing multiple sliders.
 3. Micro-thumbnails of the Slider Images posted in the Admin Slider Image list.
 
+## Version 0.5
+Slider content added, to produce a better slder. This involved changing the js file, as well as the post-type declaration.
+
 ## Version 0.3.1
 Some better instructions were added.
 
