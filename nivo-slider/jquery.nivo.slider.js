@@ -93,16 +93,17 @@
         // Process caption function
         var processCaption = function(settings){
             var nivoCaption = $('.nivo-caption', slider);
-            if(vars.currentImage.attr('title') != '' && vars.currentImage.attr('title') != undefined){
+            if(vars.currentImage.attr('id') != '' && vars.currentImage.attr('id') != undefined){
+                var id = vars.currentImage.attr('id');
                 var title = vars.currentImage.attr('title');
-                if(title.substr(0,1) == '#') title = $(title).html();   
-
+                if(id.substr(0,1) == '#') id = $(id).html();   
+                var idtitle = '<strong>' + id + ':</strong> ' + title;
                 if(nivoCaption.css('display') == 'block'){
                     setTimeout(function(){
-                        nivoCaption.html(title);
+                        nivoCaption.html(idtitle);
                     }, settings.animSpeed);
                 } else {
-                    nivoCaption.html(title);
+                    nivoCaption.html(idtitle);
                     nivoCaption.stop().fadeIn(settings.animSpeed);
                 }
             } else {
