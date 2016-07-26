@@ -97,7 +97,7 @@
                 var id = vars.currentImage.attr('id');
                 var title = vars.currentImage.attr('title');
                 if(id.substr(0,1) == '#') id = $(id).html();   
-                var idtitle = '<strong>' + id + ':</strong> ' + title;
+                var idtitle = '<strong>' + id + ':</strong><br />' + title;
                 if(nivoCaption.css('display') == 'block'){
                     setTimeout(function(){
                         nivoCaption.html(idtitle);
@@ -641,7 +641,7 @@
         boxCols: 8,
         boxRows: 4,
         animSpeed: 500,
-        pauseTime: 3000,
+        pauseTime: 7000,
         startSlide: 0,
         directionNav: true,
         controlNav: true,
