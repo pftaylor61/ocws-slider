@@ -3,7 +3,7 @@
     Plugin Name: OCWS Slider Plugin
     Description: This is a full featured slider plugin. It is actually a simple implementation of a nivo slideshow into WordPress. It utilizes the nivo slider jQuery code, following a tutorial by Ciprian Turcu. A couple of OCWS custom features have been added. Make sure you include the shortcode [ocwssl-shortcode] in any page where you wish the slider to appear.
     Author: Paul Taylor
-    Version: 0.7
+    Version: 0.8.1
     Plugin URI: http://oldcastleweb.com/pws/plugins
     Author URI: http://oldcastleweb.com/pws/about
     License: GPL2
@@ -66,6 +66,66 @@ add_action('save_post', 'ocwssl_mbe_function_save');
 add_action('wp_print_scripts', 'ocwssl_register_scripts');
 add_action('wp_print_styles', 'ocwssl_register_styles');
 
+add_action('do_meta_boxes', 'ocwssl_image_box');
+
+function ocwssl_image_box() {
+
+	remove_meta_box( 'postimagediv', SLSLUG, 'side' );
+
+	add_meta_box('postimagediv', __('OCWS '.SLNAME_SG.' Featured Image'), 'ocwssl_post_thumbnail_meta_box', SLSLUG, 'normal', 'high');
+
+}
+
+function ocwssl_post_thumbnail_meta_box($post) {
+    
+    $thumbnail_id = get_post_meta( $post->ID, '_thumbnail_id', true );
+    echo ocwssl_wp_post_thumbnail_html( $thumbnail_id, $post->ID );
+    
+}
+
+function ocwssl_wp_post_thumbnail_html( $thumbnail_id = null, $post = null ) {
+    global $content_width, $_wp_additional_image_sizes;
+
+    $post               = get_post( $post );
+    $post_type_object   = get_post_type_object( $post->post_type );
+    $set_thumbnail_link = '<p class="hide-if-no-js"><a title="%s" href="%s" id="set-post-thumbnail" class="thickbox">%s</a></p>';
+    $upload_iframe_src  = get_upload_iframe_src( 'image', $post->ID );
+
+    $content = sprintf( $set_thumbnail_link,
+        esc_attr( $post_type_object->labels->set_featured_image ),
+        esc_url( $upload_iframe_src ),
+        esc_html( $post_type_object->labels->set_featured_image )
+    );
+
+    if ( $thumbnail_id && get_post( $thumbnail_id ) ) {
+        $old_content_width = $content_width;
+        $content_width = 1000;
+        if ( !isset( $_wp_additional_image_sizes['full'] ) )    // use 'full' for system defined fullsize image OR use our custom image size instead of 'post-thumbnail'
+            $thumbnail_html = wp_get_attachment_image( $thumbnail_id, array( $content_width, $content_width ) );
+        else
+            $thumbnail_html = wp_get_attachment_image( $thumbnail_id, 'full' ); // use 'full' for system defined fullsize image OR use our custom image size instead of 'post-thumbnail'
+        if ( !empty( $thumbnail_html ) ) {
+            $ajax_nonce = wp_create_nonce( 'set_post_thumbnail-' . $post->ID );
+            $content = sprintf( $set_thumbnail_link,
+                esc_attr( $post_type_object->labels->set_featured_image ),
+                esc_url( $upload_iframe_src ),
+                $thumbnail_html
+            );
+            $content .= '<p class="hide-if-no-js"><a href="#" id="remove-post-thumbnail" onclick="WPRemoveThumbnail(\'' . $ajax_nonce . '\');return false;">' . esc_html( $post_type_object->labels->remove_featured_image ) . '</a></p>';
+        }
+        $content_width = $old_content_width;
+    }
+
+    /**
+     * Filter the admin post thumbnail HTML markup to return.
+     *
+     * @since 2.9.0
+     *
+     * @param string $content Admin post thumbnail HTML markup.
+     * @param int    $post_id Post ID.
+     */
+    return apply_filters( 'admin_post_thumbnail_html', $content, $post->ID );
+}
 
 /* we need a meta box */
 

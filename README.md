@@ -4,7 +4,7 @@
 This plugin produces a jQuery powered slider.
 
 ## Current Version
-The current version is 0.7.
+The current version is 0.8.1.
 
 ## Implementation
 The slider can be used in three ways.
@@ -37,15 +37,13 @@ This slideshow can display up to 5 slides. It does this, by implementing a new c
 
 The Slider admin page has just these four features to adjust, before publishing.
 
-![ocws-slider](./images/slider_plugin_ss1.png)
+![ocws-slider](./images/slider_plugin_ss4.png)
 
 The first job is to set the slide title. You should also have a brief comment (Main Info Line), to describe the slider, though this is optional. You can also add a Link URL. If you add a Link URL, then the system will add the words "Read more..." to the info line, and turn this into a link, that leads to the relevant page. These first three elements are deployed as shown below.
 
 ![ocws-slider](./images/slider_plugin_ss2.png)
 
-The fourth, but obviously the most important element, is to set the Featured Image, because this is the element that actually constitutes the picture for the slider.
-
-![ocws-slider](./images/slider_plugin_ss3.png)
+The fourth, but obviously the most important element, is to set the Featured Image, because this is the element that actually constitutes the picture for the slider. For this special custom post type ("Slider Image"), the featured image box has been moved, and the image made full size.
 
 The list of Slider Images can also be seen here:
 
@@ -64,6 +62,9 @@ Three features occur to me.
 1. An options panel to determine the sizing of the Slider Images.
 2. A method for implementing multiple sliders.
 3. Micro-thumbnails of the Slider Images posted in the Admin Slider Image list.
+
+## Version 0.8
+The featured image box has been moved center stage in the admin panel, and the image made nearly full size. 
 
 ## Version 0.7
 The plugin now features a simple info line, and an optional Link URL, providing a means for visitors to click from the slider to a featured page in the site, or off-site.
