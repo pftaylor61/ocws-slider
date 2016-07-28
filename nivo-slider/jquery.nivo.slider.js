@@ -96,8 +96,19 @@
             if(vars.currentImage.attr('id') != '' && vars.currentImage.attr('id') != undefined){
                 var id = vars.currentImage.attr('id');
                 var title = vars.currentImage.attr('title');
+                var vurl = vars.currentImage.attr('data-url');
+                var vurlopen = '';
+                var vurlclose = '';
+                var vurlcont = '';
+                var vurlhyph = '';
+                if(vurl != ""){
+                    vurlopen = '<a href="' + vurl + '">';
+                    vurlclose = '</a>...';
+                    vurlcont = 'Read more'
+                    vurlhyph = ' - ';
+                }
                 if(id.substr(0,1) == '#') id = $(id).html();   
-                var idtitle = '<strong>' + id + ':</strong><br />' + title;
+                var idtitle = '<strong>' + id + ':</strong><br />' + title + vurlhyph + vurlopen + vurlcont + vurlclose;
                 if(nivoCaption.css('display') == 'block'){
                     setTimeout(function(){
                         nivoCaption.html(idtitle);

@@ -3,7 +3,7 @@
     Plugin Name: OCWS Slider Plugin
     Description: This is a full featured slider plugin. It is actually a simple implementation of a nivo slideshow into WordPress. It utilizes the nivo slider jQuery code, following a tutorial by Ciprian Turcu. A couple of OCWS custom features have been added. Make sure you include the shortcode [ocwssl-shortcode] in any page where you wish the slider to appear.
     Author: Paul Taylor
-    Version: 0.6
+    Version: 0.7
     Plugin URI: http://oldcastleweb.com/pws/plugins
     Author URI: http://oldcastleweb.com/pws/about
     License: GPL2
@@ -12,7 +12,8 @@
 */
 
 /* Essential Initialization Definitions */
-define('SLSLUG', 'ocwsslider');
+// define('SLSLUG', 'ocwsslider');
+define('SLSLUG', 'ocwssl_images');
 define('SLNAME_SG', 'Slider Image');
 define('SLNAME_PL', 'Slider Images');
 define("OCWSSL_BASE_DIR",dirname(__FILE__));
@@ -44,12 +45,12 @@ function ocwssl_init() {
         'supports' => array(
             'title',
             'thumbnail',
-            'editor',
+             
 
         )
     );
     register_post_type('ocwssl_images', $args);
-    add_action('add_meta_boxes','ocwssl_mbe_create');
+    
 
     add_image_size('ocwssl_widget', 150, 83, true);
     add_image_size('ocwssl_function', 600, 280, true);
@@ -57,6 +58,8 @@ function ocwssl_init() {
 }
 add_theme_support( 'post-thumbnails' );
 add_action('init', 'ocwssl_init');
+add_action('add_meta_boxes','ocwssl_mbe_create');
+add_action('save_post', 'ocwssl_mbe_function_save');
 
 
 /* getting the nivo-slider code to work */
@@ -65,14 +68,43 @@ add_action('wp_print_styles', 'ocwssl_register_styles');
 
 
 /* we need a meta box */
+
+
+
 function ocwssl_mbe_create() {
     add_meta_box( 'ocwssl_meta', 'OCWS '.SLNAME_SG.' Information', 'ocwssl_mbe_function', SLSLUG, 'normal', 'default' );
 }
 
 function ocwssl_mbe_function() {
         global $post;
-	echo "<p>All the extra information required for the ".SLNAME_SG." should be in this section.</p>";
+	echo '<p>Special information required for the '.SLNAME_SG.'.</p>';
+        
+	// let's see if any metadata values exist
+	$ocwssl_info = get_post_meta( $post->ID, '_ocwssl_info', true);
+        $ocwssl_url = get_post_meta( $post->ID, '_ocwssl_url', true);
+        ?>
+        <label for="ocwssl_info"><strong>Type one line of brief info here (no HTML code):</strong></label>
+        <input style="width:75%" type="text" id="ocwssl_info" name="ocwssl_info" value="<?php echo esc_attr($ocwssl_info); ?>"  />
+        <p>If you want your slider to link to another page or post, then put the whole URL for that page in the box below.</p>
+        <label for="ocwssl_url"><strong>Type URL here:</strong> (don't forget http:// or https://)</label>
+        <input style="width:75%" type="text" id="ocwssl_url" name="ocwssl_url" value="<?php echo esc_attr($ocwssl_url); ?>"  />
+        
+        <?php
+        
 }
+
+function ocwssl_mbe_function_save($post_id) {
+	// this function will save the data used by ocwscc_mbe_function and ocwscc_mbe_function_sd
+	
+	// first check to ssee if the metadata has been set
+	if ( isset( $_POST['ocwssl_url'])) {
+		
+		// now save the data
+		
+		update_post_meta( $post_id, '_ocwssl_info', strip_tags( $_POST['ocwssl_info']));
+                update_post_meta( $post_id, '_ocwssl_url', strip_tags( $_POST['ocwssl_url']));
+        }
+} // end function ocwssl_mbe_function_save
 
 
 function ocwssl_register_scripts() {
@@ -111,8 +143,13 @@ function ocwssl_function($type='ocwssl_function') {
     while ($loop->have_posts()) {
         $loop->the_post();
 
+        // $ocwssl_id = $post->ID;
+        $ocwssl_info2 = get_post_meta(get_the_ID(), '_ocwssl_info');
+        $ocwssl_url2 = get_post_meta(get_the_ID(), '_ocwssl_url');
         $the_url = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), $type);
-        $result .='<img id="'.get_the_title().'" src="' . $the_url[0] . '" data-thumb="' . $the_url[0] . '" title="'.get_the_content().'" alt=""/>';
+        
+        // echo $ocwssl_id;
+        $result .='<img id="'.get_the_title().'" src="' . $the_url[0] . '" data-thumb="' . $the_url[0] . '" title="'.$ocwssl_info2[0].'" alt="" data-url="'.$ocwssl_url2[0].'" />';
     }
     $result .= '</div>';
     $result .='<div id = "htmlcaption" class = "nivo-html-caption">';
