@@ -62,6 +62,10 @@ Three features occur to me.
 1. An options panel to determine the sizing of the Slider Images.
 2. A method for implementing multiple sliders.
 3. Micro-thumbnails of the Slider Images posted in the Admin Slider Image list.
+4. A routine for choosing the order of slide display.
+
+## Version 0.9
+A problem with the sizing of images was corrected.
 
 ## Version 0.8
 The featured image box has been moved center stage in the admin panel, and the image made nearly full size. 
