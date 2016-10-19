@@ -4,7 +4,7 @@
 This plugin produces a jQuery powered slider.
 
 ## Current Version
-The current version is 0.8.1.
+The current version is 1.0.1.
 
 ## Implementation
 The slider can be used in three ways.
@@ -63,6 +63,9 @@ Three features occur to me.
 2. A method for implementing multiple sliders.
 3. Micro-thumbnails of the Slider Images posted in the Admin Slider Image list.
 4. A routine for choosing the order of slide display.
+
+## Version 1.0.1
+The menu order for the post type has now been introduced, so that the slideshow can be ordered by this menu order ascending. The menu order as been headed in the edit section as 'Slide Order'. It can be edited by Quick Edit.
 
 ## Version 0.9
 A problem with the sizing of images was corrected.

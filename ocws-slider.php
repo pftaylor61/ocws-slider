@@ -3,7 +3,7 @@
     Plugin Name: OCWS Slider Plugin
     Description: This is a full featured slider plugin. It is actually a simple implementation of a nivo slideshow into WordPress. It utilizes the nivo slider jQuery code, following a tutorial by Ciprian Turcu. A couple of OCWS custom features have been added. Make sure you include the shortcode [ocwssl-shortcode] in any page where you wish the slider to appear.
     Author: Paul Taylor
-    Version: 0.9
+    Version: 1.0.1
     Plugin URI: http://oldcastleweb.com/pws/plugins
     Author URI: http://oldcastleweb.com/pws/about
     License: GPL2
@@ -45,11 +45,65 @@ function ocwssl_init() {
         'supports' => array(
             'title',
             'thumbnail',
+            'menu_order',
+            'page-attributes',
              
 
         )
     );
-    register_post_type('ocwssl_images', $args);
+    register_post_type(SLSLUG, $args);
+    add_action( 'init', 'slider_type_taxonomy');
+    
+/**
+* add order column to admin listing screen for header text
+*/
+function add_new_ocwssl_images_column($ocwssl_images_columns) {
+  $ocwssl_images_columns['menu_order'] = "Slide Order";
+  return $ocwssl_images_columns;
+}
+add_action('manage_edit-ocwssl_images_columns', 'add_new_ocwssl_images_column');
+
+/**
+* show custom order column values
+*/
+function show_order_column($name){
+  global $post;
+
+  switch ($name) {
+    case 'menu_order':
+      $order = $post->menu_order;
+      echo $order;
+      break;
+   default:
+      break;
+   }
+}
+add_action('manage_ocwssl_images_posts_custom_column','show_order_column');
+
+/**
+* make column sortable
+*/
+function order_column_register_sortable($columns){
+  $columns['menu_order'] = 'menu_order';
+  return $columns;
+}
+add_filter('manage_edit-ocwssl_images_sortable_columns','order_column_register_sortable');
+    
+function slider_type_taxonomy() {
+    register_taxonomy(
+        'slidertype',
+        SLSLUG,
+        array(
+            'hierarchical' => false,
+            'label' => 'Slider Type',
+            'query_var' => true,
+            'rewrite' => array(
+                'slug' => 'slidertype',
+                'with_front' => false
+				)
+			)
+    );
+}
     
 
     add_image_size('ocwssl_widget', 150, 83, true);
@@ -193,7 +247,9 @@ function ocwssl_register_styles() {
 function ocwssl_function($type='ocwssl_function') {
     $args = array(
         'post_type' => 'ocwssl_images',
-        'posts_per_page' => 6
+        'posts_per_page' => 6,
+        'order' => 'ASC',
+        'orderby' => 'menu_order'
     );
     $result = '<div class="slider-wrapper theme-default">';
     $result .= '<div id="slider" class="nivoSlider">';
