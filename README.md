@@ -64,6 +64,9 @@ Three features occur to me.
 3. Micro-thumbnails of the Slider Images posted in the Admin Slider Image list.
 4. A routine for choosing the order of slide display.
 
+## Version 1.0.2
+If the slide order is set to zero, this slide will not appear in the slideshow. Consequently, there is complete control over the show. So, the number of slides allowed has been increased to 10.
+
 ## Version 1.0.1
 The menu order for the post type has now been introduced, so that the slideshow can be ordered by this menu order ascending. The menu order as been headed in the edit section as 'Slide Order'. It can be edited by Quick Edit.
 
