@@ -11,6 +11,8 @@
     GitHub Branch:     master
 */
 
+/* Update comment */
+
 /* Essential Initialization Definitions */
 // define('SLSLUG', 'ocwsslider');
 define('SLSLUG', 'ocwssl_images');

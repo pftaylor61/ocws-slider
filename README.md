@@ -4,7 +4,7 @@
 This plugin produces a jQuery powered slider.
 
 ## Current Version
-The current version is 1.0.1.
+The current version is 1.0.2.
 
 ## Implementation
 The slider can be used in three ways.
