@@ -3,15 +3,13 @@
     Plugin Name: OCWS Slider Plugin
     Description: This is a full featured slider plugin. It is actually a simple implementation of a nivo slideshow into WordPress. It utilizes the nivo slider jQuery code, following a tutorial by Ciprian Turcu. A couple of OCWS custom features have been added. Make sure you include the shortcode [ocwssl-shortcode] in any page where you wish the slider to appear.
     Author: Paul Taylor
-    Version: 1.0.2
+    Version: 1.1
     Plugin URI: http://oldcastleweb.com/pws/plugins
     Author URI: http://oldcastleweb.com/pws/about
     License: GPL2
     GitHub Plugin URI: https://github.com/pftaylor61/ocws-slider
     GitHub Branch:     master
 */
-
-/* Update comment */
 
 /* Essential Initialization Definitions */
 // define('SLSLUG', 'ocwsslider');
@@ -44,6 +42,19 @@ function ocwssl_init() {
                          ),
         'menu_icon'   => OCWSSL_IMAGES_URL.'/palmtree16x16.png',
         'show_ui' => true,
+        'capability_type' => SLSLUG,
+        'capabilities' => array(
+					'publish_posts' => 'publish_'.SLSLUG.'s',
+					'edit_posts' => 'edit_'.SLSLUG.'s',
+					'edit_others_posts' => 'edit_others_'.SLSLUG.'s',
+					'delete_posts' => 'delete_'.SLSLUG.'s',
+					'delete_others_posts' => 'delete_others_'.SLSLUG.'s',
+					'read_private_posts' => 'read_private_'.SLSLUG.'s',
+					'edit_post' => 'edit_'.SLSLUG,
+					'delete_post' => 'delete_'.SLSLUG,
+					'read_post' => 'read_'.SLSLUG,
+				),
+        'map_meta_cap' => true,
         'supports' => array(
             'title',
             'thumbnail',
@@ -146,6 +157,8 @@ function ocwssl_wp_post_thumbnail_html( $thumbnail_id = null, $post = null ) {
     $post_type_object   = get_post_type_object( $post->post_type );
     $set_thumbnail_link = '<p class="hide-if-no-js"><a title="%s" href="%s" id="set-post-thumbnail" class="thickbox">%s</a></p>';
     $upload_iframe_src  = get_upload_iframe_src( 'image', $post->ID );
+    
+    
 
     $content = sprintf( $set_thumbnail_link,
         esc_attr( $post_type_object->labels->set_featured_image ),
@@ -171,6 +184,8 @@ function ocwssl_wp_post_thumbnail_html( $thumbnail_id = null, $post = null ) {
         }
         $content_width = $old_content_width;
     }
+    $content .= "<p>It is recommended that the slider image should have the following sizes:</p>\n";
+    $content .= "<ul><li>Large Slider: 1400 x 400</li><li>Widget: 150 x 83</li><li>Thin Slider: 1200 x 80</li></ul>\n";
 
     /**
      * Filter the admin post thumbnail HTML markup to return.

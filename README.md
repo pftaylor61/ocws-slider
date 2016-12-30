@@ -4,7 +4,7 @@
 This plugin produces a jQuery powered slider.
 
 ## Current Version
-The current version is 1.0.2.
+The current version is 1.1.
 
 ## Implementation
 The slider can be used in three ways.
@@ -63,6 +63,9 @@ Three features occur to me.
 2. A method for implementing multiple sliders.
 3. Micro-thumbnails of the Slider Images posted in the Admin Slider Image list.
 4. A routine for choosing the order of slide display.
+
+## Version 1.1
+Capabilities have been added, in order to restrict certain user roles.
 
 ## Version 1.0.2
 If the slide order is set to zero, this slide will not appear in the slideshow. Consequently, there is complete control over the show. So, the number of slides allowed has been increased to 10.
