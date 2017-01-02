@@ -3,7 +3,7 @@
     Plugin Name: OCWS Slider Plugin
     Description: This is a full featured slider plugin. It is actually a simple implementation of a nivo slideshow into WordPress. It utilizes the nivo slider jQuery code, following a tutorial by Ciprian Turcu. A couple of OCWS custom features have been added. Make sure you include the shortcode [ocwssl-shortcode] in any page where you wish the slider to appear.
     Author: Paul Taylor
-    Version: 1.1
+    Version: 1.2
     Plugin URI: http://oldcastleweb.com/pws/plugins
     Author URI: http://oldcastleweb.com/pws/about
     License: GPL2
@@ -66,6 +66,22 @@ function ocwssl_init() {
     );
     register_post_type(SLSLUG, $args);
     add_action( 'init', 'slider_type_taxonomy');
+    
+        function ocwssl_add_theme_caps() {
+        // gets the administrator role
+        $admins = get_role( 'administrator' );
+
+        $admins->add_cap( 'publish_'.SLSLUG.'s' ); 
+        $admins->add_cap( 'edit_'.SLSLUG.'s' ); 
+        $admins->add_cap( 'edit_others_'.SLSLUG.'s' ); 
+        $admins->add_cap( 'delete_'.SLSLUG.'s' ); 
+        $admins->add_cap( 'delete_others_'.SLSLUG.'s' ); 
+        $admins->add_cap( 'read_private_'.SLSLUG.'s' ); 
+        $admins->add_cap( 'edit_'.SLSLUG ); 
+        $admins->add_cap( 'delete_'.SLSLUG, ); 
+        $admins->add_cap( 'read_'.SLSLUG ); 
+        }
+        add_action( 'admin_init', 'ocwssl_add_theme_caps');
     
 /**
 * add order column to admin listing screen for header text
