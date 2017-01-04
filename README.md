@@ -65,6 +65,9 @@ Three features occur to me.
 4. A routine for choosing the order of slide display.
 
 ## Version 1.2
+Default capabilities temporarily disabled, due to a fault.
+
+## Version 1.2
 Added default capabilities
 
 ## Version 1.1
