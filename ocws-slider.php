@@ -3,7 +3,7 @@
     Plugin Name: OCWS Slider Plugin
     Description: This is a full featured slider plugin. It is actually a simple implementation of a nivo slideshow into WordPress. It utilizes the nivo slider jQuery code, following a tutorial by Ciprian Turcu. A couple of OCWS custom features have been added. Make sure you include the shortcode [ocwssl-shortcode] in any page where you wish the slider to appear.
     Author: Paul Taylor
-    Version: 1.2.1
+    Version: 1.3
     Plugin URI: http://oldcastleweb.com/pws/plugins
     Author URI: http://oldcastleweb.com/pws/about
     License: GPL2
@@ -139,6 +139,7 @@ function slider_type_taxonomy() {
 
     add_image_size('ocwssl_widget', 150, 83, true);
     add_image_size('ocwssl_function', 1400, 400, true);
+    add_image_size('ocwssl_poster', 1600, 700, true);
     add_image_size('ocwssl_thin',600, 40, true);
 }
 add_theme_support( 'post-thumbnails' );
@@ -203,7 +204,7 @@ function ocwssl_wp_post_thumbnail_html( $thumbnail_id = null, $post = null ) {
         $content_width = $old_content_width;
     }
     $content .= "<p>It is recommended that the slider image should have the following sizes:</p>\n";
-    $content .= "<ul><li>Large Slider: 1400 x 400</li><li>Widget: 150 x 83</li><li>Thin Slider: 1200 x 80</li></ul>\n";
+    $content .= "<ul><li>Poster Slider: 1600 x 700</li><li>Large Slider: 1400 x 400</li><li>Widget: 150 x 83</li><li>Thin Slider: 1200 x 80</li></ul>\n";
 
     /**
      * Filter the admin post thumbnail HTML markup to return.
