@@ -4,7 +4,7 @@
 This plugin produces a jQuery powered slider.
 
 ## Current Version
-The current version is 1.3.
+The current version is 1.4.
 
 ## Implementation
 The slider can be used in three ways.
@@ -63,6 +63,9 @@ Three features occur to me.
 2. A method for implementing multiple sliders.
 3. Micro-thumbnails of the Slider Images posted in the Admin Slider Image list.
 4. A routine for choosing the order of slide display.
+
+## Version 1.4
+Make banner captions smaller on cellphone screens.
 
 ## Version 1.3
 New Poster Size (1600 x 700) for front page display produced.
